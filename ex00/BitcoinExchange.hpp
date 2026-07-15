@@ -6,7 +6,7 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 18:34:52 by snazzal           #+#    #+#             */
-/*   Updated: 2026/07/15 13:03:44 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/07/15 13:22:55 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include <map>
 #include <sstream>
 #include <climits>
+
+//TODO: canonical forms
 
 class BitcoinExchange
 {

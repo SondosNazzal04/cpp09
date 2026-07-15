@@ -6,7 +6,7 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 18:34:55 by snazzal           #+#    #+#             */
-/*   Updated: 2026/07/15 13:04:12 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/07/15 13:23:07 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ BitcoinExchange::BitcoinExchange()
 	}
 	fs.close();
 }
-
+//check invalid dates
 void	BitcoinExchange::checkInput(std::pair <std::string, double> input)
 {
 	if (input.first < "2009-01-01")
