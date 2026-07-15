@@ -6,7 +6,7 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 18:34:55 by snazzal           #+#    #+#             */
-/*   Updated: 2026/07/15 12:17:35 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/07/15 13:04:12 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,16 @@ BitcoinExchange::BitcoinExchange()
 	fs.close();
 }
 
+void	BitcoinExchange::checkInput(std::pair <std::string, double> input)
+{
+	if (input.first < "2009-01-01")
+		throw std::runtime_error("date too early!");
+	if (input.second < 0)
+		throw std::runtime_error("not a positive value");
+	if (input.second > INT_MAX)
+		throw std::runtime_error("too large a number.");
+}
+
 BitcoinExchange::~BitcoinExchange()
 {
 }
@@ -86,12 +96,20 @@ void	BitcoinExchange::parseInput(int argc, char **argv)
 		try
 		{
 			std::pair <std::string, double> input = this->parseLine(line, seperator);
-			std::cout << input.first << " => " << input.second << " => " << "answer" << "\n";
+			this->checkInput(input);
+			std::map <std::string, double>::iterator it = this->_database.upper_bound(input.first);
+			it--;
+			double answer = it->second * input.second;
+			std::cout << input.first << " => " << input.second << " => " << answer << "\n";
 		}
 		catch(const std::exception& e)
 		{
-			std::cerr << "Error: bad input => " << line << '\n';
-			// std::cerr << e.what() << '\n';
+			std::string error = e.what();
+			std::cerr << "Error: ";
+			if ("seperator not found\n" == error)
+				std::cerr << "bad input => " << line << '\n';
+			else
+				std::cerr << e.what() << '\n';
 		}
 
 	}
