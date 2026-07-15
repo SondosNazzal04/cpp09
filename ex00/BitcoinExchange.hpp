@@ -6,7 +6,7 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 18:34:52 by snazzal           #+#    #+#             */
-/*   Updated: 2026/07/15 11:00:25 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/07/15 11:59:04 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ class BitcoinExchange
 {
 private:
 	std::map <std::string, double>	_database;
-	std::map <std::string, double>	_input;
+	// std::map <std::string, double>	_input;
 public:
 	BitcoinExchange();
 	~BitcoinExchange();
 	void parseInput(int argc, char **argv);
 	// void parseDatabaseLine(const std::string &line);
-	std::pair <std::string, double> parseLine(const std::string &line);
+	std::pair <std::string, double> parseLine(const std::string &line, char seperator);
 };
 
 

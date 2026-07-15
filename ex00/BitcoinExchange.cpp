@@ -6,28 +6,28 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 18:34:55 by snazzal           #+#    #+#             */
-/*   Updated: 2026/07/15 11:10:25 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/07/15 12:17:35 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
 
-std::pair <std::string, double>	BitcoinExchange::parseLine(const std::string &line)
+std::pair <std::string, double>	BitcoinExchange::parseLine(const std::string &line, char seperator)
 {
 	std::stringstream	ss;
-	double				exchangeRate;
-	size_t				seperatorPos = line.find(",");
+	double				value;
+	size_t				seperatorPos = line.find(seperator);
 	if (seperatorPos == std::string::npos)
 	{
-		seperatorPos = line.find("|");
-		if (seperatorPos == std::string::npos)
-			throw std::runtime_error("seperator not found\n");
+		throw std::runtime_error("seperator not found\n");
 	}
 	std::string			date = line.substr(0, seperatorPos);
-	std::string			exchangeRateStr = line.substr(seperatorPos);
-	ss << exchangeRateStr;
-	ss >> exchangeRate;
-	return std::make_pair(date, exchangeRate);
+	if (!date.empty() && date[date.length() - 1] == ' ')
+		date.erase(date.length() - 1);
+	std::string			valueStr = line.substr(seperatorPos + 1);
+	ss << valueStr;
+	ss >> value;
+	return std::make_pair(date, value);
 }
 
 BitcoinExchange::BitcoinExchange()
@@ -38,11 +38,21 @@ BitcoinExchange::BitcoinExchange()
 		throw std::runtime_error("Error: Failed to open file!");
 
 	std::getline(fs, line);
-
+	char seperator = ',';
+	size_t seperatorIdx = line.find(seperator);
+	if (seperatorIdx == std::string::npos)
+	{
+		seperator = '|';
+		seperatorIdx = line.find(seperator);
+		if (seperatorIdx == std::string::npos)
+			throw std::runtime_error("seperator not found\n");
+	}
 	while (std::getline(fs, line))
 	{
-		this->parseLine(line);
-		this->_database.insert(parseLine(line));
+		if (line.empty())
+			continue;
+		// this->parseLine(line);
+		this->_database.insert(this->parseLine(line, seperator));
 	}
 	fs.close();
 }
@@ -60,12 +70,30 @@ void	BitcoinExchange::parseInput(int argc, char **argv)
 	if (!fs.is_open())
 		throw std::runtime_error("Error: could not open file.\n");
 	std::getline(fs, line);
-	// char	seperator = line.find("|");
-	// if (seperator == std::string::npos)
 
-	while (!std::getline(fs, line))
+	char seperator = ',';
+	size_t seperatorIdx = line.find(seperator);
+	if (seperatorIdx == std::string::npos)
 	{
-		this->_input.insert(this->parseLine(line));
+		seperator = '|';
+		seperatorIdx = line.find(seperator);
+		if (seperatorIdx == std::string::npos)
+			throw std::runtime_error("seperator not found\n");
+	}
+
+	while (std::getline(fs, line))
+	{
+		try
+		{
+			std::pair <std::string, double> input = this->parseLine(line, seperator);
+			std::cout << input.first << " => " << input.second << " => " << "answer" << "\n";
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << "Error: bad input => " << line << '\n';
+			// std::cerr << e.what() << '\n';
+		}
+
 	}
 	fs.close();
 }
