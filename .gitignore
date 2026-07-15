@@ -1,0 +1,16 @@
+*.o
+
+# Nested .git directories (ignore any .git folders except the root one)
+**/.git/
+**/.git
+
+# Executables (files without extensions in project directories)
+cpp*/ex*/*
+!cpp*/ex*/*.cpp
+!cpp*/ex*/*.tpp
+!cpp*/ex*/*.hpp
+!cpp*/ex*/*.h
+!cpp*/ex*/Makefile
+!cpp*/ex*/*.txt
+!cpp*/ex*/*.log
+!cpp*/ex*/*.pdf
