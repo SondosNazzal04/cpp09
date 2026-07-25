@@ -6,11 +6,11 @@
 #    By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/15 13:10:43 by snazzal           #+#    #+#              #
-#    Updated: 2026/07/15 13:10:59 by snazzal          ###   ########.fr        #
+#    Updated: 2026/07/25 15:43:15 by snazzal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = main.cpp
+SRCS = main.cpp RPN.cpp
 OBJS = ${SRCS:.cpp=.o}
 NAME = RPN
 CXX = c++
