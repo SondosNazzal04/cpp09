@@ -6,7 +6,7 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 18:53:21 by snazzal           #+#    #+#             */
-/*   Updated: 2026/07/28 01:29:47 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/07/28 01:38:33 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ private:
 		const std::vector<int> &alignedLosers,
 		int straggler, bool hasStraggler);
 
-	std::vector<int> insertDequeElements(const std::vector<int> &sortedWinners,
-		const std::vector<int> &alignedLosers,
+	std::deque<int> insertDequeElements(const std::deque<int> &sortedWinners,
+		const std::deque<int> &alignedLosers,
 		int straggler, bool hasStraggler);
 
 	// apply fordjohnson
@@ -63,6 +63,7 @@ public:
 	~PmergeMe();
 
 	std::vector<int> &getVector();
+	std::deque<int> &getDeque();
 
 	void parse(const std::string &numbers);
 	void printAfter();
