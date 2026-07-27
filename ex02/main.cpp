@@ -6,7 +6,7 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 19:25:26 by snazzal           #+#    #+#             */
-/*   Updated: 2026/07/25 21:12:59 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/07/28 01:30:15 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,15 @@ int	main(int argc, char **argv)
 	{
 		PmergeMe pmergeMe;
 		pmergeMe.parse(argv[1]);
+
+		long long startVector = getTime();
 		pmergeMe.sortVector();
-		pmergeMe.sortDeque();
+		long long endVector = getTime();
+
+		pmergeMe.printAfter();
+
+		std::cout << "Time to process a range of " << pmergeMe.getVector().size() << " elements with std::vector : " << static_cast<double>(endVector - startVector) << " us\n";
+		// pmergeMe.sortDeque();
 	}
 	catch(const std::exception& e)
 	{
