@@ -6,7 +6,7 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 13:22:06 by snazzal           #+#    #+#             */
-/*   Updated: 2026/07/25 16:12:42 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/07/29 17:23:44 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,18 @@
 
 RPN::RPN()
 {
+}
+
+RPN::RPN(const RPN &other)
+{
+	this->_stack = other._stack;
+}
+
+RPN RPN::operator=(const RPN &other)
+{
+	if (this != &other)
+		this->_stack = other._stack;
+	return *this;
 }
 
 RPN::~RPN()

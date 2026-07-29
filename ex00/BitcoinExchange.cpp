@@ -6,7 +6,7 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 18:34:55 by snazzal           #+#    #+#             */
-/*   Updated: 2026/07/15 13:23:07 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/07/29 17:21:40 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,40 @@ BitcoinExchange::BitcoinExchange()
 	}
 	fs.close();
 }
+
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &other)
+{
+	this->_database = other._database;
+}
+
+BitcoinExchange BitcoinExchange::operator=(const BitcoinExchange &other)
+{
+	if (this != &other)
+		this->_database = other._database;
+	return *this;
+}
 //check invalid dates
 void	BitcoinExchange::checkInput(std::pair <std::string, double> input)
 {
-	if (input.first < "2009-01-01")
+	if (input.first < _database.begin()->first)
 		throw std::runtime_error("date too early!");
 	if (input.second < 0)
 		throw std::runtime_error("not a positive value");
 	if (input.second > INT_MAX)
 		throw std::runtime_error("too large a number.");
+
+	size_t firstDash = input.first.find('-');
+	size_t secondDash = input.first.find('-', firstDash + 1);
+
+	std::string year = input.first.substr(0, firstDash);
+	std::string month = input.first.substr(firstDash + 1, secondDash - firstDash - 1);
+	std::string day = input.first.substr(secondDash + 1);
+	if (year.length() > 4 || month.length() > 2 || day.length() > 2)
+		throw std::runtime_error("invalid date");
+	if (month > "12" || month < "01")
+		throw std::runtime_error("invalid month");
+	if (day > "31" || day < "01")
+		throw std::runtime_error("invalid day");
 }
 
 BitcoinExchange::~BitcoinExchange()

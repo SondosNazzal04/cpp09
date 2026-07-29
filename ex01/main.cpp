@@ -6,7 +6,7 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 13:21:20 by snazzal           #+#    #+#             */
-/*   Updated: 2026/07/25 15:11:43 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/07/29 17:25:35 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int argc, char **argv)
 {
 	if (argc != 2)
 	{
-		std::cerr << "wrong number of arguments, ./RPN \"expression\"";
+		std::cerr << "wrong number of arguments, ./RPN \"expression\"\n";
 		return 1;
 	}
 	RPN calculator;

@@ -6,7 +6,7 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 19:25:23 by snazzal           #+#    #+#             */
-/*   Updated: 2026/07/29 16:07:39 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/07/29 16:29:09 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ PmergeMe	PmergeMe::operator=(const PmergeMe &other)
 	}
 	return *this;
 }
-
 
 PmergeMe::~PmergeMe()
 {
