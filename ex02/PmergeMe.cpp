@@ -6,7 +6,7 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 19:25:23 by snazzal           #+#    #+#             */
-/*   Updated: 2026/07/28 01:38:43 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/07/29 16:07:39 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,23 @@
 PmergeMe::PmergeMe()
 {
 }
+
+PmergeMe::PmergeMe(const PmergeMe &other)
+{
+	_vector = other._vector;
+	_deque = other._deque;
+}
+
+PmergeMe	PmergeMe::operator=(const PmergeMe &other)
+{
+	if (this != &other)
+	{
+		_vector = other._vector;
+		_deque = other._deque;
+	}
+	return *this;
+}
+
 
 PmergeMe::~PmergeMe()
 {
@@ -52,6 +69,17 @@ std::deque<int> &PmergeMe::getDeque()
 {
 	return this->_deque;
 }
+
+void PmergeMe::addElement(char *argv)
+{
+	checkValid(argv);
+	long number = atol(argv);
+	if (number > INT_MAX)
+			throw std::runtime_error("Overflow");
+	_vector.push_back(number);
+	_deque.push_back(number);
+}
+
 
 void PmergeMe::parse(const std::string &numbers)
 {

@@ -6,7 +6,7 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 18:53:21 by snazzal           #+#    #+#             */
-/*   Updated: 2026/07/28 01:38:33 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/07/29 16:05:34 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,15 @@ private:
 	std::deque <int> fordJohnsonDeque(const std::deque <int> &input);
 public:
 	PmergeMe();
+	PmergeMe(const PmergeMe &other);
+	PmergeMe operator=(const PmergeMe &other);
 	~PmergeMe();
 
 	std::vector<int> &getVector();
 	std::deque<int> &getDeque();
 
 	void parse(const std::string &numbers);
+	void addElement(char *argv);
 	void printAfter();
 	void sortVector();
 	void sortDeque();
