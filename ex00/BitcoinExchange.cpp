@@ -6,11 +6,30 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 18:34:55 by snazzal           #+#    #+#             */
-/*   Updated: 2026/07/29 17:21:40 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/07/31 14:54:06 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
+
+std::string trim(const std::string& str, const std::string &whitespace) {
+	const size_t first = str.find_first_not_of(whitespace);
+
+	if (first == std::string::npos)
+		return "";
+	const size_t last = str.find_last_not_of(whitespace);
+	return str.substr(first, (last - first) + 1);
+}
+
+bool	isnum(const std::string &str)
+{
+	for (size_t i = 0; i < str.length(); i++)
+	{
+		if (!isdigit(str[i]) && str[i] != '-' && str[i] != '.')
+			return false;
+	}
+	return true;
+}
 
 std::pair <std::string, double>	BitcoinExchange::parseLine(const std::string &line, char seperator)
 {
@@ -18,13 +37,19 @@ std::pair <std::string, double>	BitcoinExchange::parseLine(const std::string &li
 	double				value;
 	size_t				seperatorPos = line.find(seperator);
 	if (seperatorPos == std::string::npos)
-	{
-		throw std::runtime_error("seperator not found\n");
-	}
+		throw std::runtime_error("bad input\n");
 	std::string			date = line.substr(0, seperatorPos);
+	date = trim(date, " ");
+	if (date.empty())
+		throw std::runtime_error("bad input\n");
 	if (!date.empty() && date[date.length() - 1] == ' ')
 		date.erase(date.length() - 1);
 	std::string			valueStr = line.substr(seperatorPos + 1);
+	valueStr = trim(valueStr, " ");
+	if (!isnum(valueStr))
+		throw std::runtime_error("bad input\n");
+	if (valueStr.empty())
+		throw std::runtime_error("bad input\n");
 	ss << valueStr;
 	ss >> value;
 	return std::make_pair(date, value);
@@ -45,13 +70,12 @@ BitcoinExchange::BitcoinExchange()
 		seperator = '|';
 		seperatorIdx = line.find(seperator);
 		if (seperatorIdx == std::string::npos)
-			throw std::runtime_error("seperator not found\n");
+			throw std::runtime_error("bad input\n");
 	}
 	while (std::getline(fs, line))
 	{
 		if (line.empty())
 			continue;
-		// this->parseLine(line);
 		this->_database.insert(this->parseLine(line, seperator));
 	}
 	fs.close();
@@ -68,14 +92,19 @@ BitcoinExchange BitcoinExchange::operator=(const BitcoinExchange &other)
 		this->_database = other._database;
 	return *this;
 }
+
+
+
 //check invalid dates
 void	BitcoinExchange::checkInput(std::pair <std::string, double> input)
 {
+	if (!isnum(input.first))
+		throw std::runtime_error("bad input\n");
 	if (input.first < _database.begin()->first)
 		throw std::runtime_error("date too early!");
 	if (input.second < 0)
 		throw std::runtime_error("not a positive value");
-	if (input.second > INT_MAX)
+	if (input.second > 1000)
 		throw std::runtime_error("too large a number.");
 
 	size_t firstDash = input.first.find('-');
@@ -113,7 +142,7 @@ void	BitcoinExchange::parseInput(int argc, char **argv)
 		seperator = '|';
 		seperatorIdx = line.find(seperator);
 		if (seperatorIdx == std::string::npos)
-			throw std::runtime_error("seperator not found\n");
+			throw std::runtime_error("bad input\n");
 	}
 
 	while (std::getline(fs, line))
@@ -131,7 +160,7 @@ void	BitcoinExchange::parseInput(int argc, char **argv)
 		{
 			std::string error = e.what();
 			std::cerr << "Error: ";
-			if ("seperator not found\n" == error)
+			if ("bad input\n" == error)
 				std::cerr << "bad input => " << line << '\n';
 			else
 				std::cerr << e.what() << '\n';

@@ -6,7 +6,7 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 18:34:52 by snazzal           #+#    #+#             */
-/*   Updated: 2026/07/29 17:21:49 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/07/31 13:43:13 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 #include <sstream>
 #include <climits>
 
-//TODO: canonical forms
-
 class BitcoinExchange
 {
 private:
@@ -31,7 +29,6 @@ public:
 	BitcoinExchange operator =(const BitcoinExchange &other);
 	~BitcoinExchange();
 	void parseInput(int argc, char **argv);
-	// void parseDatabaseLine(const std::string &line);
 	std::pair <std::string, double> parseLine(const std::string &line, char seperator);
 	void checkInput(std::pair <std::string, double> input);
 };
