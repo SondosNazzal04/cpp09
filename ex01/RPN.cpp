@@ -6,7 +6,7 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 13:22:06 by snazzal           #+#    #+#             */
-/*   Updated: 2026/07/29 17:23:44 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/08/01 12:12:19 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,26 @@ int RPN::calculate(int first, int second, const std::string &operation)
 	return res;
 }
 
+bool isValidExpression(const std::string &expression)
+{
+	for (size_t i = 0; i < expression.length(); i++)
+	{
+		if (expression[i] != '+'
+			&& expression[i] != '-'
+			&& expression[i] != '/'
+			&& expression[i] != '*'
+			&& expression[i] != ' '
+			&& !isdigit(expression[i]))
+			return false;
+	}
+	return true;
+}
 
 void RPN::evaluate(const std::string &expression)
 {
+
+	if (!isValidExpression(expression))
+		throw std::runtime_error("invalid expression");
 	std::stringstream ss(expression);
 	std::string token;
 
