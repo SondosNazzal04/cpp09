@@ -6,7 +6,7 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 18:34:55 by snazzal           #+#    #+#             */
-/*   Updated: 2026/08/05 15:44:52 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/08/05 15:57:50 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,11 @@ BitcoinExchange BitcoinExchange::operator=(const BitcoinExchange &other)
 	return *this;
 }
 
-
-
 //check invalid dates
 void	BitcoinExchange::checkInput(std::pair <std::string, double> input)
 {
 	if (!isnum(input.first))
-		throw std::runtime_error("bad input\n");
+		throw std::runtime_error("bad input1\n");
 	if (input.first < _database.begin()->first)
 		throw std::runtime_error("date too early!");
 	if (input.second < 0)
@@ -119,6 +117,13 @@ void	BitcoinExchange::checkInput(std::pair <std::string, double> input)
 		throw std::runtime_error("invalid month");
 	if (day > "31" || day < "01")
 		throw std::runtime_error("invalid day");
+	if (day == "31" && (month == "02" || month == "04" || month == "06" || month == "09" || month == "11"))
+		throw std::runtime_error("date does not exist");
+	if (month == "02" && (day == "30"))
+		throw std::runtime_error("date does not exist");
+	int yearNum = atoi(year.c_str());
+	if (!(yearNum % 4 == 0 && yearNum % 100 != 0) && day == "29" && month == "02")
+		throw std::runtime_error("date does not exist");
 }
 
 BitcoinExchange::~BitcoinExchange()
@@ -142,20 +147,20 @@ void	BitcoinExchange::parseInput(int argc, char **argv)
 		seperator = '|';
 		seperatorIdx = line.find(seperator);
 		if (seperatorIdx == std::string::npos)
-			throw std::runtime_error("bad input\n");
+			throw std::runtime_error("bad input2\n");
 	}
 
 	size_t	seperatorPos = line.find(seperator);
 	if (seperatorPos == std::string::npos)
-		throw std::runtime_error("bad input\n");
+		throw std::runtime_error("bad input3\n");
 	std::string	date = line.substr(0, seperatorPos);
 	date = trim(date, " \t");
 	if (date.empty() || date != "date")
-		throw std::runtime_error("bad input\n");
+		throw std::runtime_error("bad input4\n");
 	std::string	valueStr = line.substr(seperatorPos + 1);
-	valueStr = trim(date, " \t");
+	valueStr = trim(valueStr, " \t");
 	if (valueStr.empty() || valueStr != "value")
-		throw std::runtime_error("bad input\n");
+		throw std::runtime_error("bad input5\n");
 
 	while (std::getline(fs, line))
 	{

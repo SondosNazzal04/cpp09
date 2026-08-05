@@ -6,7 +6,7 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 18:34:52 by snazzal           #+#    #+#             */
-/*   Updated: 2026/07/31 13:43:13 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/08/05 15:52:47 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <fstream>
 #include <map>
 #include <sstream>
+#include <cstdlib>
 #include <climits>
 
 class BitcoinExchange
