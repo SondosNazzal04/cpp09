@@ -6,7 +6,7 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 19:25:23 by snazzal           #+#    #+#             */
-/*   Updated: 2026/07/29 16:29:09 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/08/05 17:26:00 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,13 +206,16 @@ void PmergeMe::createDequePairs(const std::deque<int> &input,
 std::vector<int> PmergeMe::alignVectorLosers(const std::vector<int> &sortedWinners, const std::vector<std::pair<int, int> > &pairs)
 {
 	std::vector<int> aligned;
+	std::vector<bool> used(pairs.size(), false);
+
 	for (size_t i = 0; i < sortedWinners.size(); i++)
 	{
 		for (size_t j = 0; j < pairs.size(); j++)
 		{
-			if (pairs[j].first == sortedWinners[i])
+			if (!used[j] && pairs[j].first == sortedWinners[i])
 			{
 				aligned.push_back(pairs[j].second);
+				used[j] = true;
 				break;
 			}
 		}
