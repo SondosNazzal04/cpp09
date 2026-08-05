@@ -6,7 +6,7 @@
 /*   By: snazzal <snazzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 18:34:55 by snazzal           #+#    #+#             */
-/*   Updated: 2026/07/31 14:54:06 by snazzal          ###   ########.fr       */
+/*   Updated: 2026/08/05 15:44:52 by snazzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ std::pair <std::string, double>	BitcoinExchange::parseLine(const std::string &li
 	if (seperatorPos == std::string::npos)
 		throw std::runtime_error("bad input\n");
 	std::string			date = line.substr(0, seperatorPos);
-	date = trim(date, " ");
+	date = trim(date, " \t");
 	if (date.empty())
 		throw std::runtime_error("bad input\n");
 	if (!date.empty() && date[date.length() - 1] == ' ')
 		date.erase(date.length() - 1);
 	std::string			valueStr = line.substr(seperatorPos + 1);
-	valueStr = trim(valueStr, " ");
+	valueStr = trim(valueStr, " \t");
 	if (!isnum(valueStr))
 		throw std::runtime_error("bad input\n");
 	if (valueStr.empty())
@@ -144,6 +144,18 @@ void	BitcoinExchange::parseInput(int argc, char **argv)
 		if (seperatorIdx == std::string::npos)
 			throw std::runtime_error("bad input\n");
 	}
+
+	size_t	seperatorPos = line.find(seperator);
+	if (seperatorPos == std::string::npos)
+		throw std::runtime_error("bad input\n");
+	std::string	date = line.substr(0, seperatorPos);
+	date = trim(date, " \t");
+	if (date.empty() || date != "date")
+		throw std::runtime_error("bad input\n");
+	std::string	valueStr = line.substr(seperatorPos + 1);
+	valueStr = trim(date, " \t");
+	if (valueStr.empty() || valueStr != "value")
+		throw std::runtime_error("bad input\n");
 
 	while (std::getline(fs, line))
 	{
